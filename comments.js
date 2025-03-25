@@ -1,23 +1,15 @@
-const express = require("express");
+const http = require("http");
 
-const app = express();
+//Create web server
+const hostname = "127.0.0.1";
 const port = 3000;
 
-app.use(express.json());
-
-app.get("/", (req, res) => {
-  res.send("Hello World!");
+const server = http.createServer((req, res) => {
+  res.statusCode = 200;
+  res.setHeader("Content-Type", "text/plain");
+  res.end("Hello, World!\n");
 });
 
-app.post("/comments", (req, res) => {
-  const comment = req.body.comment;
-  if (comment) {
-    res.status(201).send({ message: "Comment received", comment: comment });
-  } else {
-    res.status(400).send({ message: "No comment provided" });
-  }
-});
-
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
+server.listen(port, hostname, () => {
+  console.log("Server running");
 });
